@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Mount glusterfs volume
+loop=0
+while [ loop -eq 0 ] do
+	mount -t glusterfs storage:${GLUSTER_VOLUME} /data
+	if [ $? -eq 0 ] then
+		echo "Glusterfs volume is mounted in /data"
+		loop=1
+	else
+		echo "There are some problem when try to mount Glusterfs volume. Are you sure you have linked gluster server with this container and have colled the link as 'storage' ? I will try again in 60s."
+		sleep 60
+	fi
+done
+
+exec /sbin/entrypoint.sh app:start

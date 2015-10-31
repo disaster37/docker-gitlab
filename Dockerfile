@@ -1,11 +1,13 @@
-FROM quay.io/sameersbn/ubuntu:14.04.20151023
-MAINTAINER sameer@damagehead.com
+FROM webcenter/rancher-stack-base:latest
+MAINTAINER MAINTAINER Sebastien LANGOUREAUX <linuxworkgroup@hotmail.com>
+
+ENV GLUSTER_VOLUME appvol
 
 ENV GITLAB_VERSION=8.1.0 \
     GITLAB_SHELL_VERSION=2.6.5 \
     GITLAB_GIT_HTTP_SERVER_VERSION=0.3.0 \
     GITLAB_USER="git" \
-    GITLAB_HOME="/home/git" \
+    GITLAB_HOME="/data" \
     GITLAB_LOG_DIR="/var/log/gitlab" \
     SETUP_DIR="/var/cache/gitlab" \
     RAILS_ENV=production
@@ -33,8 +35,7 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv E1DD270288B4E60
  && update-locale LANG=C.UTF-8 LC_MESSAGES=POSIX \
  && locale-gen en_US.UTF-8 \
  && dpkg-reconfigure locales \
- && gem install --no-document bundler \
- && rm -rf /var/lib/apt/lists/*
+ && gem install --no-document bundler
 
 COPY assets/setup/ ${SETUP_DIR}/
 RUN bash ${SETUP_DIR}/install.sh
@@ -42,10 +43,15 @@ RUN bash ${SETUP_DIR}/install.sh
 COPY assets/config/ ${SETUP_DIR}/config/
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
+COPY run /app/run
+RUN chmod 755 /app/run
+
+
+# CLEAN APT
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 EXPOSE 22/tcp 80/tcp 443/tcp
 
 VOLUME ["${GITLAB_DATA_DIR}", "${GITLAB_LOG_DIR}"]
 WORKDIR ${GITLAB_INSTALL_DIR}
-ENTRYPOINT ["/sbin/entrypoint.sh"]
-CMD ["app:start"]
+CMD ["/app/run"]
