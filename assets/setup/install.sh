@@ -4,8 +4,8 @@ set -e
 GEM_CACHE_DIR="${SETUP_DIR}/cache.${GITLAB_VERSION}"
 
 # add golang1.5 ppa
-apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv B0B8B106A0CA2F79FBB616DBA65E2E5D742A38EE
-echo "deb http://ppa.launchpad.net/evarlast/golang1.5/ubuntu trusty main" >> /etc/apt/sources.list
+#apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv B0B8B106A0CA2F79FBB616DBA65E2E5D742A38EE
+#echo "deb http://ppa.launchpad.net/evarlast/golang1.5/ubuntu trusty main" >> /etc/apt/sources.list
 
 # rebuild apt cache
 apt-get update
