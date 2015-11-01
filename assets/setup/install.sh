@@ -88,7 +88,7 @@ chown -R ${GITLAB_USER}:${GITLAB_USER} ${GITLAB_HOME}/
 
 # compile assets
 echo "Compiling assets. Please be patient, this could take a while..."
-sudo -HEu ${GITLAB_USER} bundle exec rake assets:clean assets:precompile >/dev/null 2>&1
+sudo -HEu ${GITLAB_USER} bundle exec rake assets:precompile >/dev/null 2>&1
 
 # symlink log -> ${GITLAB_LOG_DIR}/gitlab
 rm -rf log
