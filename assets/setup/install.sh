@@ -88,7 +88,7 @@ chown -R ${GITLAB_USER}:${GITLAB_USER} ${GITLAB_HOME}/
 
 # compile assets
 echo "Compiling assets. Please be patient, this could take a while..."
-sudo -HEu ${GITLAB_USER} bundle exec rake assets:precompile >/dev/null 2>&1
+sudo -HEu ${GITLAB_USER} bundle exec rake assets:clean assets:precompile >/dev/null 2>&1
 
 # symlink log -> ${GITLAB_LOG_DIR}/gitlab
 rm -rf log
@@ -303,7 +303,7 @@ EOF
 
 # purge build dependencies
 apt-get purge -y --auto-remove gcc g++ make patch pkg-config cmake paxctl \
-  libc6-dev ruby2.1-dev golang-go \
+  ruby2.1-dev golang-go \
   libmysqlclient-dev libpq-dev zlib1g-dev libyaml-dev libssl-dev \
   libgdbm-dev libreadline-dev libncurses5-dev libffi-dev \
   libxml2-dev libxslt-dev libcurl4-openssl-dev libicu-dev
