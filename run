@@ -4,7 +4,7 @@
 loop=0
 while [ loop -eq 0 ] do
 	mount -t glusterfs storage:${GLUSTER_VOLUME} /home/git/data
-	if [ $? -eq 0 ] then
+	if [ $? -eq 0 ]; then
 		echo "Glusterfs volume is mounted in /home/git/data"
 		loop=1
 	else
