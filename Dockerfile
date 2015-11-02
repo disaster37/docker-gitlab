@@ -39,12 +39,13 @@ RUN apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv E1DD270288B4E60
 
 COPY assets/setup/ ${SETUP_DIR}/
 RUN bash ${SETUP_DIR}/install.sh
-
 COPY assets/config/ ${SETUP_DIR}/config/
 COPY entrypoint.sh /sbin/entrypoint.sh
 RUN chmod 755 /sbin/entrypoint.sh
 COPY run /app/run
 RUN chmod 755 /app/run
+
+RUN pip install rancher_metadata
 
 
 # CLEAN APT
