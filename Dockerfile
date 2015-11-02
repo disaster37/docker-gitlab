@@ -45,7 +45,6 @@ RUN chmod 755 /sbin/entrypoint.sh
 COPY run /app/run
 RUN chmod 755 /app/run
 
-RUN pip install rancher_metadata
 
 
 # CLEAN APT
